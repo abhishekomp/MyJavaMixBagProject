@@ -1,11 +1,9 @@
 package java8practice;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
 public class PersonDemoJava8 {
@@ -45,6 +43,7 @@ public class PersonDemoJava8 {
         //getGroupOfAgesByName(createPeople());
 //        countByNameAsInt(createPeople());
         //getSumOfAges(createPeople());
+        //getMaxAge(createPeople());
         //getPersonWithMaxAge(createPeople());    //get the person object
         //getPersonsNameWithMaxAge(createPeople());
         //sortByAge(createPeople());
@@ -71,7 +70,7 @@ public class PersonDemoJava8 {
     //Objective: Sort the list of persons according to their age and get the names
     private static void sortByAgeAndGetNames(List<Person> people) {
         people.stream()
-                .sorted(Comparator.comparing(Person::getAge))
+                .sorted(comparing(Person::getAge))
                 .map(Person::getName)
                 .forEach(System.out::println);
     }
@@ -88,27 +87,38 @@ public class PersonDemoJava8 {
     private static void sortByAgeDesc(List<Person> people) {
         people.stream()
                 //.sorted(Comparator.comparing(Person::getAge).thenComparing(Person::getName))
-                .sorted(Comparator.comparing(Person::getAge).reversed())
+                .sorted(comparing(Person::getAge).reversed())
                 .forEach(System.out::println);
     }
 
     //Objective: list the persons according to their age in ascending order
     private static void sortByAge(List<Person> people) {
         people.stream()
-                .sorted(Comparator.comparing(Person::getAge))
+                .sorted(comparing(Person::getAge))
                 .forEach(System.out::println);
     }
 
+    //(Hard) Given a list of person objects (name and age) get the person name having maximum age
     private static void getPersonsNameWithMaxAge(List<Person> people) {
+//        Optional<Person> collect = people.stream()
+//                .collect(maxBy(comparing(Person::getAge), person -> person.getName()));
         final String name = people.stream()
-                .collect(Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(Person::getAge)), person -> person.map(Person::getName).orElse("")));
+                .collect(collectingAndThen(maxBy(comparing(Person::getAge)), person -> person.map(Person::getName).orElse("")));
         System.out.println("name = " + name);
     }
 
     private static void getPersonWithMaxAge(List<Person> people) {
+        //final Optional<Person> collect = people.stream().max(comparing(Person::getAge));
         final Optional<Person> collect = people.stream()
-                .collect(Collectors.maxBy(Comparator.comparing(Person::getAge)));
+                .collect(maxBy(comparing(Person::getAge)));
         System.out.println("collect = " + collect.get());
+    }
+
+    private static int getMaxAge(List<Person> people) {
+        OptionalInt optionalInt = people.stream()
+                .mapToInt(Person::getAge)
+                .max();
+        return optionalInt.getAsInt();
     }
 
     private static void getSumOfAges(List<Person> people) {
