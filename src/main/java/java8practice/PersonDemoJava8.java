@@ -140,6 +140,8 @@ public class PersonDemoJava8 {
     //I want to group by name and get the list of ages per group.
     // i.e. If there are 2 persons named Sara in the list then the group named Sara will have 2 ages in the list
     //Here we are grouping by Name but in each bucket we want the age and not the person itself
+    // Here we have 3 collectors at work
+    // Grouping by assumes that you want a list while mapping asks you to provide that infomation.
     private static void getGroupOfAgesByName(List<Person> people) {
         final Map<String, List<Integer>> collect = people.stream()
                 .collect(Collectors.groupingBy(Person::getName, Collectors.mapping(Person::getAge, Collectors.toList())));
