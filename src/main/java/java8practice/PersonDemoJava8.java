@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+
 public class PersonDemoJava8 {
     //Inspired from: https://www.youtube.com/watch?v=pGroX3gmeP8
 
@@ -46,10 +48,11 @@ public class PersonDemoJava8 {
         //getPersonWithMaxAge(createPeople());    //get the person object
         //getPersonsNameWithMaxAge(createPeople());
         //sortByAge(createPeople());
-        sortByAgeDesc(createPeople());
+        //sortByAgeDesc(createPeople());
         //sortByAgeAndThenNameAsc(createPeople());
         //sortByAgeAndGetNames(createPeople());
         //groupByAgeAndGetNames(createPeople());
+        getCountByName(createPeople());
     }
 
     private static void convertListToMap(List<Person> people) {
@@ -133,21 +136,32 @@ public class PersonDemoJava8 {
 //                .collect(Collectors.groupingBy(Person::getName, Collectors.counting()));
 
         final Map<String, Integer> countByNameAsInt = people.stream()
-                .collect(Collectors.groupingBy(Person::getName, Collectors.collectingAndThen(Collectors.counting(), Long::intValue)));
+                .collect(groupingBy(Person::getName, collectingAndThen(counting(), Long::intValue)));
         System.out.println("countByNameAsInt = " + countByNameAsInt);
     }
 
+    // Given a list of persons, give a map that has the key as name of the person and value as count of persons with that name
+    private static void getCountByName(List<Person> people) {
+        final Map<String, Long> countByName = people.stream()
+                .collect(groupingBy(Person::getName, counting()));
+        System.out.println("countByName = " + countByName);
+    }
+
+    // Given a list of persons, give a map that has the key as name of the person and value as list of (age) of persons
+    //groupingBy with Mapping. While groupingBy I don't care about the object. I want to keep the person's age in the named bucket
     //I want to group by name and get the list of ages per group.
     // i.e. If there are 2 persons named Sara in the list then the group named Sara will have 2 ages in the list
     //Here we are grouping by Name but in each bucket we want the age and not the person itself
     // Here we have 3 collectors at work
-    // Grouping by assumes that you want a list while mapping asks you to provide that infomation.
+    // Grouping by assumes that you want a list while mapping asks you to provide that information.
+    //Instead of collecting as a list in the value part of the map, we can also mention toSet()
     private static void getGroupOfAgesByName(List<Person> people) {
         final Map<String, List<Integer>> collect = people.stream()
-                .collect(Collectors.groupingBy(Person::getName, Collectors.mapping(Person::getAge, Collectors.toList())));
+                .collect(groupingBy(Person::getName, mapping(Person::getAge, toList())));
         System.out.println("collect = " + collect);
     }
 
+    // Given a list of persons, give a map that has the key as name of the person and value as list of persons with that name
     private static void getGroupOfPersonByName(List<Person> people) {
         final Map<String, List<Person>> collect = people.stream()
                 .collect(Collectors.groupingBy(Person::getName));
