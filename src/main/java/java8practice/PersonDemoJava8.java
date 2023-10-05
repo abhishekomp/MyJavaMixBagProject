@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.*;
 public class PersonDemoJava8 {
     //Inspired from: https://www.youtube.com/watch?v=pGroX3gmeP8
 
-    public static List<Person> createPeople() {
+    private static List<Person> createPeople() {
         return List.of(
                 new Person("Jack", 15),
                 new Person("Sara", 20),
