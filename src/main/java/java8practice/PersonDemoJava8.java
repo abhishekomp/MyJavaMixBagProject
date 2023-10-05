@@ -112,8 +112,12 @@ public class PersonDemoJava8 {
         final Optional<Person> collect = people.stream()
                 .collect(maxBy(comparing(Person::getAge)));
         System.out.println("collect = " + collect.get());
+
+        // The below is same as above
+        final Optional<Person> personWithMaxAge = people.stream().max(comparing(Person::getAge));
     }
 
+    // From a given list of person objects (name, age) get the max age value
     private static int getMaxAge(List<Person> people) {
         OptionalInt optionalInt = people.stream()
                 .mapToInt(Person::getAge)
@@ -147,10 +151,14 @@ public class PersonDemoJava8 {
 
         final Map<String, Integer> countByNameAsInt = people.stream()
                 .collect(groupingBy(Person::getName, collectingAndThen(counting(), Long::intValue)));
+        //Both are exactly same. The above uses a method reference while the below one uses a lambda expression
+//        final Map<String, Integer> countByNameAsInt = people.stream()
+//                .collect(groupingBy(Person::getName, collectingAndThen(counting(), value -> value.intValue())));
         System.out.println("countByNameAsInt = " + countByNameAsInt);
     }
 
     // Given a list of persons, give a map that has the key as name of the person and value as count of persons with that name
+    // The pattern for the Collector is: A Collector is using a function
     private static void getCountByName(List<Person> people) {
         final Map<String, Long> countByName = people.stream()
                 .collect(groupingBy(Person::getName, counting()));
@@ -158,20 +166,31 @@ public class PersonDemoJava8 {
     }
 
     // Given a list of persons, give a map that has the key as name of the person and value as list of (age) of persons
-    //groupingBy with Mapping. While groupingBy I don't care about the object. I want to keep the person's age in the named bucket
-    //I want to group by name and get the list of ages per group.
+    // groupingBy is a Collector, and it uses a Function and a Collector in turn.
+    // groupingBy with Mapping. While groupingBy I don't care about the object. I want to keep the person's age in the named bucket
+    // I want to group by name and get the list of ages per group.
     // i.e. If there are 2 persons named Sara in the list then the group named Sara will have 2 ages in the list
-    //Here we are grouping by Name but in each bucket we want the age and not the person itself
+    // Here we are grouping by Name but in each bucket we want the age and not the person itself
     // Here we have 3 collectors at work
     // Grouping by assumes that you want a list while mapping asks you to provide that information.
-    //Instead of collecting as a list in the value part of the map, we can also mention toSet()
+    // Instead of collecting as a list in the value part of the map, we can also mention toSet()
+    // "mapping(Person::getAge, toList())" -> this gives a collector which collects the ages in a List. You can collect it in a Set as well by mentioning toSet() instead of toList()
     private static void getGroupOfAgesByName(List<Person> people) {
         final Map<String, List<Integer>> collect = people.stream()
                 .collect(groupingBy(Person::getName, mapping(Person::getAge, toList())));
         System.out.println("collect = " + collect);
     }
 
+    // This gives the compilation error: "non-static method cannot be referenced from a static context"
+    // Long.intValue(person.getAge())
+//    private static void getGroupOfAgesByName2(List<Person> people) {
+//        final Map<String, List<Integer>> collect = people.stream()
+//                .collect(groupingBy(Person::getName, mapping(person -> Long.intValue(person.getAge()), toList())));
+//        System.out.println("collect = " + collect);
+//    }
+
     // Given a list of persons, give a map that has the key as name of the person and value as list of persons with that name
+    // groupingBy is a Collector, and it is using a function by which it creates different groups (buckets)
     private static void getGroupOfPersonByName(List<Person> people) {
         final Map<String, List<Person>> collect = people.stream()
                 .collect(Collectors.groupingBy(Person::getName));

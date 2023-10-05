@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -427,6 +428,42 @@ class Java8LambdaAndStream {
                 .collect(groupingBy(Function.identity()));
         System.out.println("collect1 = " + collect1);
 
+    }
+
+    // Find the longest word from a given sentence. Pre Java 8 way
+    @Test
+    public void test_should_give_the_longest_word_from_the_sentence() {
+        String sentence = "The quick Dinosauraus brown fox jumps over the lazy dog and pink pig";
+
+        //Extract all the words from the sentence
+        String[] words = sentence.split("\\s+");
+        int prevWordLength = 0;
+        String longestWord = "";
+        for(String word : words) {
+            int currentWordLength = word.length();
+            if(currentWordLength > prevWordLength) {
+                prevWordLength = currentWordLength;
+                longestWord = word;
+            }
+        }
+        System.out.println("longestWord = " + longestWord);
+    }
+
+    // Find the longest word from a given sentence. Pre Java 8 way
+    @Test
+    public void test_should_give_the_longest_word_from_the_sentence_Java8() {
+        String sentence = "The quick Dinosauraus brown fox jumps over the lazy dog and pink pig";
+
+        //Extract all the words from the sentence
+        String[] words = sentence.split("\\s+");
+        List<String> list = Arrays.asList(words);
+        Map<String, Integer> wordToLength = list.stream()
+                        .collect(toMap(Function.identity(),String::length));
+        System.out.println("wordToLength = " + wordToLength);
+
+        // Extracting the longest word from a sentence.
+        Optional<String> longestWord = list.stream().max(comparing(String::length));
+        System.out.println("longestWord = " + longestWord.get());
     }
 
     @Test
