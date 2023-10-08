@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class TasteOfLambda {
 
     static List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
@@ -15,7 +17,7 @@ public class TasteOfLambda {
         //productInfiniteStream();
         //findNextNNumbers();
 
-        createAListOfIntegerGivenTheBoundaries(21,30);
+        //createAListOfIntegerGivenTheBoundaries(21,30);
     }
 
     //Given a number k, and a count n, find the total of the double of n even numbers starting with k, where square root of each number is greater than 20
@@ -35,13 +37,33 @@ public class TasteOfLambda {
         System.out.println(Stream.iterate(100, e -> e + 1));
     }
 
-    private static List<Integer> createAListOfIntegerGivenTheBoundaries(int start, int end) {
+    /**
+     * Generate a list of Integers given the start and end element
+     * @param start Integer to begin with
+     * @param end Integer to end with
+     * @return  the list containing the integers
+     */
+    List<Integer> createAListOfIntegerGivenTheBoundaries(int start, int end) {
         int limit = end - start + 1;
         final List<Integer> integers = Stream.iterate(start, e -> e + 1)
                 .limit(limit)
-                .collect(Collectors.toList());
-        integers.forEach(System.out::println);
+                .collect(toList());
+        //integers.forEach(System.out::println);
         return integers;
+    }
+
+    /**
+     * Starting from the given odd number gets next N odd numbers
+     * @param start the starting odd number
+     * @param count the number of next numbers
+     * @return a list of numbers
+     */
+    List<Integer> getNextNOddNumbers(int start, int count) {
+        //Assuming that the value of start is an odd number
+        List<Integer> oddNumbers = Stream.iterate(start, e -> e + 2)
+                .limit(count)
+                .collect(toList());
+        return oddNumbers;
     }
 
     private static void doubleAllEvenAndGetTotal(List<Integer> numbers) {
