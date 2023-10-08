@@ -28,4 +28,13 @@ class TasteOfLambdaTest {
         System.out.println("actualList = " + actualList);
         assertIterableEquals(expectedList, actualList);
     }
+
+    @Test
+    void getFirstNElements() {
+        List<Integer> expectedList = List.of(7, 9, 11, 13);
+        List<Integer> inputList = List.of(7, 9, 11, 13, 15, 17, 19);
+        List<Integer> actualList = tasteOfLambda.getFirstNElements(inputList, 4);
+        System.out.println("actualList = " + actualList);
+        assertIterableEquals(expectedList, actualList);
+    }
 }

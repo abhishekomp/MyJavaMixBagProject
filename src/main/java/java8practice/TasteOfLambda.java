@@ -66,6 +66,18 @@ public class TasteOfLambda {
         return oddNumbers;
     }
 
+    /**
+     * Get the first N elements from a list
+     * @param inputList the list
+     * @param count the number of elements to get from the list
+     * @return a sub-list with count number of elements
+     */
+    List<Integer> getFirstNElements(List<Integer> inputList, int count) {
+        int from = 0;
+        List<Integer> list = inputList.subList(from, count);
+        return list;
+    }
+
     private static void doubleAllEvenAndGetTotal(List<Integer> numbers) {
         final Optional<Integer> reduce = numbers.stream()
                 .filter(e -> e % 2 == 0)
