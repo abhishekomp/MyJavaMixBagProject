@@ -1,5 +1,10 @@
 package genericdemo;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+
 public class Box<T extends Number> {
 
     private T length;
@@ -30,5 +35,16 @@ public class Box<T extends Number> {
 
     public static <T extends Number> double calculateVolumeGenericMethod(T length, T width, T height) {
         return length.doubleValue() * width.doubleValue() * height.doubleValue();
+    }
+
+    /**
+     * Converts a list of data type that extends Number to a List of Doubles
+     * @param numbers a list of data type that extends Number
+     * @return a list of Double
+     */
+    static List<Double> convertToDouble(List<? extends Number> numbers){
+        return numbers.stream()
+                .map(Number::doubleValue)
+                .collect(toList());
     }
 }

@@ -2,6 +2,8 @@ package genericdemo;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 
 class BoxTest {
 
@@ -31,5 +33,19 @@ class BoxTest {
         System.out.println("volume = " + volume);
     }
 
+    @Test
+    void convertToDouble() {
+        List<Integer> integerList = List.of(1, 2, 3);
+        List<Double> doubles = Box.convertToDouble(integerList);
+        System.out.println("doubles = " + doubles);
 
+    }
+
+    @Test
+    void convertFloatToDouble() {
+        List<Float> floatList = List.of(1.0f, 2.4f, 3.6f);
+        List<Double> doubles = Box.convertToDouble(floatList);
+        System.out.println("doubles = " + doubles);
+
+    }
 }
