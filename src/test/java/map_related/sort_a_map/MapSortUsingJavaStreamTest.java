@@ -53,6 +53,19 @@ class MapSortUsingJavaStreamTest {
     }
 
     @Test
+    void sortMap_should_return_a_map_sorted_by_keys_in_reversedOrderVersion2() {
+
+        Map<String, Integer> sortedMap = mapSortUsingJavaStream.sortMapByKeyReversedVersion2(nameToPriceMap);
+        System.out.println("sortedMapByValue = " + sortedMap);
+
+        List<String> actualKeysList = new ArrayList<>(sortedMap.keySet());
+        System.out.println("actualKeysList = " + actualKeysList);
+
+        List<String> expectedKeysList = List.of("Starfruit", "Mango", "Banana", "Avocado", "Apple");
+        assertIterableEquals(actualKeysList, expectedKeysList);
+    }
+
+    @Test
     void sortMap_should_return_a_map_sorted_by_value_in_naturalOrder() {
 
         Map<String, Integer> sortedMap = mapSortUsingJavaStream.sortMapByValue(nameToPriceMap);
@@ -76,5 +89,30 @@ class MapSortUsingJavaStreamTest {
 
         List<Integer> expectedValuesList = List.of(40, 25, 20, 15, 10);
         assertIterableEquals(actualValuesList, expectedValuesList);
+    }
+
+    @Test
+    void sortMapByValueReversedVersion2() {
+        nameToPriceMap.forEach((k, v) -> System.out.println(k + " -> " + v));
+        System.out.println("-------------");
+        Map<String, Integer> stringIntegerMap = mapSortUsingJavaStream.sortMapByValueReversedVersion2(nameToPriceMap);
+        stringIntegerMap.forEach((k, v) -> System.out.println(k + " -> " + v));
+
+    }
+
+    @Test
+    void sortMapByValueComparatorComparing() {
+        nameToPriceMap.forEach((k, v) -> System.out.println(k + " -> " + v));
+        System.out.println("-------------");
+        Map<String, Integer> stringIntegerMap = mapSortUsingJavaStream.sortMapByValueComparatorComparing(nameToPriceMap);
+        stringIntegerMap.forEach((k, v) -> System.out.println(k + " -> " + v));
+    }
+
+    @Test
+    void sortMapByValueReversedComparatorComparing() {
+        nameToPriceMap.forEach((k, v) -> System.out.println(k + " -> " + v));
+        System.out.println("-------------");
+        Map<String, Integer> stringIntegerMap = mapSortUsingJavaStream.sortMapByValueReversedComparatorComparing(nameToPriceMap);
+        stringIntegerMap.forEach((k, v) -> System.out.println(k + " -> " + v));
     }
 }
