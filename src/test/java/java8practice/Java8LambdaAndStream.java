@@ -449,7 +449,7 @@ class Java8LambdaAndStream {
         System.out.println("longestWord = " + longestWord);
     }
 
-    // Find the longest word from a given sentence. Pre Java 8 way
+    // Find the longest word from a given sentence. Java 8 way.
     @Test
     public void test_should_give_the_longest_word_from_the_sentence_Java8() {
         String sentence = "The quick Dinosauraus brown fox jumps over the lazy dog and pink pig";
@@ -464,6 +464,18 @@ class Java8LambdaAndStream {
         // Extracting the longest word from a sentence.
         Optional<String> longestWord = list.stream().max(comparing(String::length));
         System.out.println("longestWord = " + longestWord.get());
+    }
+
+    @Test
+    public void test_produce_a_comma_separated_String_containing_all_integers_from_an_int_array() {
+        //Given an array of primitive integers, return a comma separated String containing all the integers.
+        int[] intArr = {1, 2, 3, 4, 5};
+        String expected = "1, 2, 3, 4, 5";
+        String actual = Arrays.stream(intArr)
+                .mapToObj(String::valueOf)
+                .collect(joining(", "));
+        assertEquals(expected, actual);
+
     }
 
     @Test
