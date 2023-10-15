@@ -1,4 +1,4 @@
-package corefundamentals.collection;
+package corefundamentals.collection.iterator;
 
 import java.util.Objects;
 
