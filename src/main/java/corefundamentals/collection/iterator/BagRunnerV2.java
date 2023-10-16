@@ -2,9 +2,9 @@ package corefundamentals.collection.iterator;
 
 import java.util.Iterator;
 
-public class BagRunner {
+public class BagRunnerV2 {
     public static void main(String[] args) {
-        Bag<String> myBag = new Bag<>();
+        BagV2<String> myBag = new BagV2<>();
         myBag.add("This");
         myBag.add("is");
         myBag.add("a");

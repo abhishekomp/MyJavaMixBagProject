@@ -21,7 +21,7 @@ public class Bag<T> implements Iterable<T> {
     }
 
 
-    public class BagIterator<E> implements Iterator<E>{
+    private class BagIterator<E> implements Iterator<E>{
 
         private int indexPosition = 0;
         private List<E> internalList;
