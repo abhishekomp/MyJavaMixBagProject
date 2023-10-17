@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class ListToHashMap {
 
@@ -51,10 +51,10 @@ public class ListToHashMap {
         return nameToAge;
     }
 
-    /** Create map from list and handle key clash happens and tell which map is required
+    /** Create map from list and handle key clash happens and specify the resulting map
      *
      * @param personList
-     * @return
+     * @return Map with key as Person's name and value as person's age
      */
     public Map<String, Integer> nameToAgeSpecifyMap(List<Person> personList) {
         Map<String, Integer> nameToAge = personList.stream()
@@ -64,6 +64,17 @@ public class ListToHashMap {
                         LinkedHashMap::new
                 ));
         return nameToAge;
+    }
+
+    /**
+     * Map with key as age and value as List of names of people
+     * @param personList
+     * @return Map with age as key and list of name as value
+     */
+    Map<Integer, List<String>> namesByAge(List<Person> personList) {
+        Map<Integer, List<String>> collect = personList.stream()
+                .collect(groupingBy(Person::getAge, mapping(Person::getName, toList())));
+        return collect;
     }
 
     public static void main(String[] args) {
