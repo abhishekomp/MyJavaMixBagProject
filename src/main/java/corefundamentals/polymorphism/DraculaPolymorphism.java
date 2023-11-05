@@ -1,4 +1,4 @@
-package corefundamentals;
+package corefundamentals.polymorphism;
 
 public class DraculaPolymorphism {
     public static void main(String... doYourBest) {
