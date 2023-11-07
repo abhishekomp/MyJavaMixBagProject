@@ -65,21 +65,31 @@ public class Employee implements Comparable<Employee>{
 
     @Override
     public int compareTo(Employee other) {
-        // compareTo should return < 0 if "this" is supposed to be
-        // less than "other", > 0 if "this" is supposed to be greater than
-        // "other" and 0 if they are supposed to be equal
+        // compareTo should return
+        // < 0 if "this" is supposed to be less than "other",
+        // > 0 if "this" is supposed to be greater than "other" and
+        // = 0 if they are supposed to be equal
         int last = this.lastName.compareTo(other.lastName);
         return last == 0 ? this.firstName.compareTo(other.firstName) : last;
     }
 
     /**
-     * Comparator used to compare instances of Employee class based on age(int) value
+     * Comparator used to compare instances of Employee class based on age(int) value in ascending order
      */
     public static Comparator<Employee> COMPARE_BY_AGE = new Comparator<Employee>() {
-
         @Override
         public int compare(Employee emp1, Employee emp2) {
             return emp1.getAge() - emp2.getAge();
+        }
+    };
+
+    /**
+     * Comparator used to compare instances of Employee class based on age(int) value in descending order
+     */
+    public static Comparator<Employee> COMPARE_BY_AGE_DESCENDING = new Comparator<Employee>() {
+        @Override
+        public int compare(Employee emp1, Employee emp2) {
+            return emp2.getAge() - emp1.getAge();
         }
     };
 
@@ -98,4 +108,5 @@ public class Employee implements Comparable<Employee>{
      * Comparator used to compare instances of Employee class based on age(int) value
      */
     public static Comparator<Employee> COMPARE_BY_FIRSTNAME = (Employee emp1, Employee emp2) -> emp1.getFirstName().compareTo(emp2.getFirstName());
+    //public static Comparator<Employee> COMPARE_BY_FIRSTNAME = Comparator.comparing(Employee::getFirstName);
 }

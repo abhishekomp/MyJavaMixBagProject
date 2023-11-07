@@ -40,15 +40,21 @@ class EmployeeTest {
     @Test
     void test_a_map_employee_to_age_should_have_unique_keys() {
         //Convert the list to a map
-        Map<Employee, List<Integer>> employeeListMap = list.stream()
+        Map<Employee, List<Integer>> ageListByEmployee = list.stream()
                 .collect(groupingBy(Function.identity(), mapping(Employee::getAge, toList())));
-        employeeListMap.forEach((key, value) -> System.out.println(key + " -> " + value));
-//        employeeListMap.entrySet()
-//                .forEach(e -> System.out.println(e.getKey() + " -> " + e.getValue()));
+        ageListByEmployee.forEach((key, value) -> System.out.println(key + " -> " + value));
+
+        Employee kirti = new Employee("Kirti", "Shree", 35, 25000.0);
+        assertTrue(ageListByEmployee.containsKey(kirti));
+        assertIterableEquals(ageListByEmployee.get(kirti), List.of(35));
+
+        Employee cook = new Employee("Tim", "Cook", 40, 50000.0);
+        assertTrue(ageListByEmployee.containsKey(cook));
+        assertIterableEquals(ageListByEmployee.get(cook), List.of(40, 40));
     }
 
     @Test
-    void test_a_map_of_employee_age_by_firstName() {
+    void test_create_a_map_of_employee_age_by_firstName() {
         //Convert the list to a map
         Map<String, Integer> ageByFirstName = list.stream()
                 .collect(toMap(
@@ -74,7 +80,10 @@ class EmployeeTest {
         List<Employee> empList = new ArrayList<>(list);
         //Collections.sort(empList); //for using the natural order defined inside the Employee class
         //Collections.sort(empList, Comparator.reverseOrder());
-        Collections.sort(empList, Comparator.naturalOrder());
+
+        //Collections.sort(empList, Comparator.naturalOrder());
+        empList.sort(Comparator.naturalOrder());
+
         //empList.sort(Comparator.naturalOrder());
         //Collections.sort(empList, Collections.reverseOrder());
         //empList.sort(Collections.reverseOrder());
@@ -100,11 +109,34 @@ class EmployeeTest {
     }
 
     @Test
-    void test_sort_using_multiple_fields() {
-        //Given a list of employees, sort it using lastName and when lastName matches then sort using salary in reversed(descending) (higher salary comes first)
+    void test_sort_using_lastName_ascending() {
+        //Given a list of employees, sort it using lastName in ascending order
         List<Employee> collect = list.stream()
-                .sorted(comparing(Employee::getLastName).thenComparing(Employee::getSalary).reversed())
+                .sorted(comparing(Employee::getLastName))
                 .collect(toList());
+        collect.forEach(System.out::println);
+        assertEquals("John Cena", collect.get(0).getFullName());
+    }
+
+    @Test
+    void test_sort_using_lastName_descending() {
+        //Given a list of employees, sort it using lastName in descending order
+        List<Employee> collect = list.stream()
+                .sorted(comparing(Employee::getLastName).reversed())
+                .collect(toList());
+        collect.forEach(System.out::println);
+        assertEquals("Kirti Shree", collect.get(0).getFullName());
+    }
+
+    @Test
+    void test_sort_using_multiple_fields() {
+        //Given a list of employees, sort it using lastName in ascending order and when lastName matches then sort using salary in reversed(descending) (higher salary comes first)
+        List<Employee> collect = list.stream()
+                .sorted(comparing(Employee::getLastName).thenComparing(Comparator.comparing(Employee::getSalary).reversed()))
+                .collect(toList());
+//        List<Employee> collect = list.stream()
+//                .sorted(comparing(Employee::getLastName).thenComparing(Employee::getSalary).reversed())   // Incorrect as this will reverse the entire order
+//                .collect(toList());
         collect.forEach(System.out::println);
     }
 
@@ -126,6 +158,26 @@ class EmployeeTest {
                 .collect(toList());
         collect.forEach(System.out::println);
         assertEquals("John Cena", collect.get(0).getFullName());
+    }
+
+    @Test
+    void test_sort_using_age_in_descending_by_comparator_defined_in_the_class() {
+        //Given a list of employees, sort the employees based on age ascending.
+        List<Employee> collect = list.stream()
+                .sorted(Employee.COMPARE_BY_AGE_DESCENDING)
+                .collect(toList());
+        collect.forEach(System.out::println);
+        assertEquals("John Doe", collect.get(0).getFullName());
+    }
+
+    @Test
+    void test_sort_using_age_descending_by_injecting_the_comparator() {
+        //Given a list of employees, sort the employees based on age ascending.
+        List<Employee> collect = list.stream()
+                .sorted(Comparator.comparing(Employee::getAge).reversed())
+                .collect(toList());
+        collect.forEach(System.out::println);
+        assertEquals("John Doe", collect.get(0).getFullName());
     }
 
     @Test
