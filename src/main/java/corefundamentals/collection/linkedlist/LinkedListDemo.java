@@ -13,10 +13,9 @@ public class LinkedListDemo {
         list.add("Banana");
         list.add("Peach");
 
-        System.out.println("list = " + list);
+        System.out.println("list = " + list);   //list = [Apple, Mango, Banana, Peach]
 
         final String s = list.get(2);
-        System.out.println("s = " + s);
-
+        System.out.println("s = " + s); //s = Banana
     }
 }

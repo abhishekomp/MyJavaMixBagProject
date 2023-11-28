@@ -239,4 +239,19 @@ class EmployeeTest {
         collect.forEach(System.out::println);
         assertEquals("Abbey Cena", collect.get(0).getFullName());
     }
+
+    @Test
+    void test_sorting_when_key_field_has_null_value(){
+        Employee e1 = new Employee("Akshay", "Sharma", 30, 15000.0);
+        Employee e2 = new Employee("Kirti", "Shree", 35, 25000.0);
+        Employee e3 = new Employee("John", "Doe", 45, 60000.0);
+        Employee e4 = new Employee("John", "Cena", 29, 45000.0);
+        Employee e5 = new Employee(null, "Cook", 40, 50000.0);
+        list = List.of(e1, e2, e3, e4, e5);
+        List<Employee> collect = list.stream()
+                .sorted(Employee.COMPARE_BY_FIRSTNAME)
+                .collect(toList());
+        collect.forEach(System.out::println);
+        assertEquals(40, collect.get(0).getAge());
+    }
 }
