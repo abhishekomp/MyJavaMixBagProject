@@ -3,6 +3,9 @@ package regex_examples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,4 +104,105 @@ class RegexRunnerTest {
         }
         System.out.println("count = " + count);
     }
+
+    /*
+    Two words are anagrams if they contain the same letters but in a different order. Here are a few examples of anagram pairs:
+    "listen" and "silent"
+    "binary" and "brainy"
+    "Paris" and "pairs"
+    For a given input of two strings, return a Boolean TRUE if the two strings are anagrams.
+    */
+    @Test
+    void test_check_if_strings_are_anagrams(){
+        String str1 = "listen";
+        String str2 = "Silent";
+        char[] chars = str1.toCharArray();
+
+    }
+    //V.IMP for find(), group(), start() and end() usage.
+    @Test
+    void test_demo_find_group_start_end_methods() {
+        String searchMe = "The top of the mop is called a handle";
+        Pattern pattern = Pattern.compile("[mt]op");
+        Matcher matcher = pattern.matcher(searchMe);
+        while(matcher.find()){
+            //System.out.println("Matcher found " + matcher.group() + " at index " + matcher.start());
+            System.out.println("Matcher found " + matcher.group() + " at index " + matcher.start() + " and end index " + matcher.end());
+        }
+    }
+
+    @Test
+    void test_lookbehind_example(){
+        //Given the string extract the game number
+        String input = "Game 799: 3 blue, 4 red";
+        //(?<=USD)\d{3}
+        //Pattern pattern = Pattern.compile("(?<=\\d)+:"); //cannot use quantifier in look behind
+        Pattern pattern = Pattern.compile("(\\d+):");   //extracting the digits just before the colon.
+        Matcher matcher = pattern.matcher(input);
+        if(matcher.find()){
+            System.out.println("Matcher found " + matcher.group(1) + " at index " + matcher.start());
+        }
+    }
+    @Test
+    void test_check_if_character_is_a_symbol_other_than_dot(){
+        char ch = '#';
+        // something that is not an alphabet, nor a digit and nor a period(dot)
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9.]");
+        Matcher matcher = pattern.matcher(String.valueOf(ch));
+        System.out.println(matcher.matches());
+        assertTrue(matcher.matches());
+    }
+    @Test
+    void test_check_if_character_is_a_symbol_other_than_dot_2(){
+        char ch = '?';
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('/')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('\\')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('?')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('+')).matches());
+        assertFalse(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('.')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('-')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('#')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('$')).matches());
+        assertTrue(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('*')).matches());
+        assertFalse(Pattern.compile("[^a-zA-Z0-9.]").matcher(String.valueOf('9')).matches());
+    }
+
+    @Test
+    void test_check_if_character_is_a_symbol_other_than_dot_3(){
+        char ch = '.';
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9.]");
+        Matcher matcher = pattern.matcher(String.valueOf(ch));
+        System.out.println(matcher.matches());
+        assertFalse(matcher.matches()); //ch is a dot hence it does not match the provided regex.
+    }
+
+    @Test
+    void test_check_if_character_is_a_symbol_other_than_dot_4(){
+        char ch = '$';  //dollar symbol
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9.]");
+        Matcher matcher = pattern.matcher(String.valueOf(ch));
+        System.out.println(matcher.matches());
+        assertTrue(matcher.matches());
+    }
+    @Test
+    void test_should_extract_all_instances_of_number_from_given_string(){
+        String input = "100..101..*...$102...^...103...~.104";  //dollar, caret, tilda sign
+        Pattern pattern = Pattern.compile("(\\d+)");
+        Matcher matcher = pattern.matcher(input);
+        List<String> strings = new ArrayList<>();
+        while(matcher.find()){
+            strings.add(matcher.group(1));
+            System.out.println("Matcher found " + matcher.group(1) + " at index " + matcher.start() + " and end index " + matcher.end());
+        }
+        assertIterableEquals(List.of("100", "101", "102", "103", "104"), strings);
+        System.out.println(strings);
+        /*
+        Matcher found 100 at index 0 and end index 3
+        Matcher found 101 at index 5 and end index 8
+        Matcher found 102 at index 15 and end index 18
+        Matcher found 103 at index 25 and end index 28
+        Matcher found 104 at index 33 and end index 36
+         */
+    }
+
 }

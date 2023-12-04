@@ -1,0 +1,14 @@
+Recipe: Convert a String to char array/Character stream
+Date: 2023-11-30
+Process each character of a String.
+For example, convert a String to a Java 8 Stream of Characters
+https://stackoverflow.com/questions/26320910/how-to-convert-a-string-to-a-java-8-stream-of-characters
+https://stackoverflow.com/questions/22435833/why-is-string-chars-a-stream-of-ints-in-java-8/22497858#22497858
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+Recipe: Convert an array of primitive integer to a List of Integers
+Arrays.stream(primitiveIntArrayRef)
+    .boxed()
+    .collect(toCollection(ArrayList::new)); //this can also be collect(toList())
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+Recipe: Convert a List of Integers to an array of primitive integer
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
