@@ -3,6 +3,7 @@ package corefundamentals.string_use_cases;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,6 +12,87 @@ import static org.junit.jupiter.api.Assertions.*;
  * Created by sca820 on 09 juni, 2022
  */
 class StringUseCase_01Test {
+
+    @Test
+    void test_reverse_a_String_using_Stack_approach(){
+        String input = "Hello";
+        Stack<Character> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < input.length(); i++){
+            stack.push(input.charAt(i));
+        }
+        while(!stack.isEmpty()){
+            sb.append(stack.pop());
+        }
+        System.out.println(sb.toString());
+        assertEquals("olleH", sb.toString());
+
+        //Approach 2 using StringBuilder reverse method
+        String result = new StringBuilder(input).reverse().toString();
+        System.out.println(result);
+        assertEquals("olleH", result.toString());
+    }
+
+    @Test
+    void test_reverse_a_String_using_StringBuilder_approach(){
+        String input = "Hello";
+
+        //Approach 2 using StringBuilder reverse method
+        String result = new StringBuilder(input).reverse().toString();
+        System.out.println(result);
+        assertEquals("olleH", result.toString());
+    }
+    @Test
+    void test_reverse_a_String_using_logic() {
+        String input = "Hello";
+        char[] chars = input.toCharArray();
+        int begin = 0;
+        int end = chars.length - 1;
+        char temp;
+        while(end > begin) {
+            temp = chars[begin];
+            chars[begin] = chars[end];
+            chars[end] = temp;
+            end--;
+            begin++;
+        }
+        String result = new String(chars);
+        System.out.println(result);
+        assertEquals("olleH", result);
+    }
+
+    @Test
+    void test_reverse_a_sentence(){
+        String input = "Lily like to play";
+        String[] split = input.split("\\s+");
+        int begin = 0;
+        int end = split.length - 1;
+        String temp;
+        while(end > begin){
+            temp = split[begin];
+            split[begin] = split[end];
+            split[end] = temp;
+            end--;
+            begin++;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(String str : split){
+            sb.append(str).append(' ');
+        }
+        System.out.println(sb);
+        assertEquals("play to like Lily", sb.toString().trim());
+    }
+
+    @Test
+    void test_reverse_a_sentence_using_forLoop(){
+        String input = "Lily like to play";
+        String[] split = input.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for(int i = split.length - 1; i >= 0; i--){
+            sb.append(split[i]).append(' ');
+        }
+        assertEquals("play to like Lily", sb.toString().trim());
+    }
 
     @Test
     void extractHardwarePurchasedItemsAsList() {
