@@ -1,8 +1,8 @@
 package corefundamentals.nestedclass;
 
 public class OuterClass {
-    String outerField = "Outer field";
-    static String staticOuterField = "Static outer field";
+    String outerField = "Outer field in Outer class";
+    static String staticOuterField = "Static outer field in Outer class";
 
     class InnerClass {
         void accessMembers() {

@@ -205,4 +205,88 @@ class RegexRunnerTest {
          */
     }
 
+    @Test
+    void test_should_get_all_numbers_from_space_separated_string(){
+        String input = "79 14 55 13";
+        Pattern pattern = Pattern.compile("(\\d+)");
+        Matcher matcher = pattern.matcher(input);
+        while(matcher.find()){
+            System.out.println("Matcher found '" + matcher.group(1) + "'");
+        }
+        /*
+        Matcher found '79'
+        Matcher found '14'
+        Matcher found '55'
+        Matcher found '13'
+         */
+    }
+
+    @Test
+    void test_extract_pair_of_numbers_from_given_string1() {
+        String input = "100 11 12 14";
+        //String input = "seeds: 3037945983 743948277 2623786093 391282324 195281306 62641412 769611781 377903357 2392990228 144218002 1179463071 45174621 2129467491 226193957 1994898626 92402726 1555863421 340215202 426882817 207194644";
+        //List<String> expectedList = List.of("100 11", "12 14");
+        //List<String> expectedList = List.of("100 11", "12 14");
+        Pattern pattern = Pattern.compile("(\\d+\\s\\d+)");
+        Matcher matcher = pattern.matcher(input);
+        List<String> actualList = new ArrayList<>();
+        while(matcher.find()) {
+            actualList.add(matcher.group(1));
+        }
+        actualList.forEach(System.out::println);
+        //assertIterableEquals(expectedList, actualList);
+    }
+
+    @Test
+    void test_extract_pair_of_numbers_from_given_string() {
+        //String input = "Seed: 100 11 12 14";
+        String input = "seeds: 3037945983 743948277 2623786093 391282324 195281306 62641412 769611781 377903357 2392990228 144218002 1179463071 45174621 2129467491 226193957 1994898626 92402726 1555863421 340215202 426882817 207194644";
+        //List<String> expectedList = List.of("100 11", "12 14");
+        //List<String> expectedList = List.of("100 11", "12 14");
+        Pattern pattern = Pattern.compile("(\\d+\\s\\d+)");
+        Matcher matcher = pattern.matcher(input);
+        List<String> actualList = new ArrayList<>();
+        while(matcher.find()) {
+            actualList.add(matcher.group(1));
+        }
+        actualList.forEach(System.out::println);
+        //assertIterableEquals(expectedList, actualList);
+    }
+
+    @Test
+    void test_how_does_matches_method_behave(){
+        Pattern pattern = Pattern.compile("[abc]");
+        System.out.println(pattern.matcher("abc").matches());
+        System.out.println(pattern.matcher("ab").matches());
+        System.out.println(pattern.matcher("a").matches());
+        System.out.println(pattern.matcher("b").matches());
+        System.out.println("----------------");
+        //pattern = Pattern.compile("a{5}");
+        pattern = Pattern.compile("(a|b){5}");
+        System.out.println(pattern.matcher("a").matches());
+        System.out.println(pattern.matcher("ab").matches());
+        System.out.println(pattern.matcher("aa").matches());
+        System.out.println(pattern.matcher("aaaaa").matches());
+        System.out.println(pattern.matcher("bbbbb").matches());
+        System.out.println(pattern.matcher("aaaab").matches());
+
+    }
+
+    @Test
+    void test_quantifier_for_alternation() {
+        String s = "topcoder is ";
+
+        String regExp = "((top|coder){2})";
+        Pattern pattern = Pattern.compile(regExp);
+        Matcher m = pattern.matcher(s);
+
+        while(m.find()){
+            System.out.println("group count: " + m.groupCount());
+            for (int i = 1; i <= m.groupCount(); i++) {
+                System.out.println("Found : \"" + m.group(i) + "\" as group " + i);
+            }
+            System.out.println("Zeroth group:" + m.group(0));
+        }
+    }
+
 }

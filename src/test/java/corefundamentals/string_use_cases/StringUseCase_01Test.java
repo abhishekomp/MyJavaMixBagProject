@@ -132,4 +132,19 @@ class StringUseCase_01Test {
         strings.forEach(System.out::println);
         assertThat(strings).hasSize(0);
     }
+
+    @Test
+    void test_string_join_puts_a_space_at_the_end(){
+        List<String> strings = List.of("All", "is", "fine", "today");
+        String result = String.join(" ", strings);
+        System.out.println("Result: " + result + " has length: " + result.length());
+        String resultWithNewLine = String.join("\n", strings);
+        System.out.println("Result: " + resultWithNewLine + " has length: " + resultWithNewLine.length());
+
+        String anotherString = "The quick brown fox jumps over the lazy dog";
+        System.out.println(anotherString.length()/3);
+
+    }
+
+
 }
