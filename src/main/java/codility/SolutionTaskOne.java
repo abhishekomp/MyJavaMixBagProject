@@ -22,7 +22,6 @@ public class SolutionTaskOne {
         int maxOccurence = 1;
         int index = 0;                      //1st change, can't be negative otherwise for all unique elements in the array otherwise the index returned at end will be -1
         for (int i = 0; i < N; i++) {
-            int a = 100;
             if (count[A[i]] > 0) {
                 int tmp = count[A[i]];
                 if (tmp + 1 > maxOccurence) {   //2nd change, the element being visited will lead to its count getting incremented by 1.
