@@ -1,6 +1,7 @@
 package mftdemo;
 
 import com.jcraft.jsch.*;
+import org.junit.jupiter.api.Disabled;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.util.Properties;
 
+@Disabled("Disabled until I have a sftp server to test against")
 public class SFTPDemoJSch {
     public static void main(String[] args) {
         SFTPDemoJSch sftpDemoJSch = new SFTPDemoJSch();

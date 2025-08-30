@@ -1,9 +1,11 @@
 package mftkgmcolt;
 
 import mftkgmcolt.MFTKGMCOLT;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("Disabled until I have a mft server to test against")
 public class MFTKGMCOLT_Test {
 
 

@@ -1,11 +1,14 @@
 package mftkgmcolt;
 
 import mftkgmcolt.MFTCOLTKGM;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("Disabled until I have a mft server to test against")
 public class MFTCOLTKGM_Test {
 
     @Test
+    @Disabled("Disabled until I have a mft server to test against")
     void test_send_sample_file() {
         MFTCOLTKGM mftcoltkgm = new MFTCOLTKGM();
         mftcoltkgm.uploadFile("cdt202115102.dat");
